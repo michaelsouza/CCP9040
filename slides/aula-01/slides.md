@@ -51,6 +51,61 @@ Usamos variáveis para guardar informações que podemos precisar usar ou modifi
 
 ---
 
+## Nomes em Python: Variáveis e Classes (PEP 8)
+
+Escolher bons nomes é crucial para a **legibilidade** e **manutenção** do código!
+
+### Regras Gerais (Obrigatório)
+
+*   Nomes devem começar com uma **letra** (a-z, A-Z) ou **underscore** (`_`).
+*   O restante pode conter letras, números (0-9) e underscores.
+*   São **Case-Sensitive**: `minha_var` é diferente de `Minha_Var`.
+*   **Não podem** ser [Palavras Reservadas](https://docs.python.org/3/reference/lexical_analysis.html#keywords) (como `if`, `for`, `while`, `class`, `def`, `import`, `True`, `False`, `None`, etc.).
+
+---
+
+### Convenções (Boas Práticas - PEP 8)
+
+<div style="display: flex; gap: 20px;">
+    <div style="flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px;">
+        <h4>Variáveis (e Funções): <code>snake_case</code></h4>
+        <ul>
+            <li>Use <strong>letras minúsculas</strong>.</li>
+            <li>Separe palavras com <strong>underscore</strong>.
+            <li><strong>Exemplos:</strong>
+            <br>
+            <code>taxa_juros = 0.05</code></li>
+            <code>_variavel_interna = 10</code>
+            <code>def calc_media(lista_numeros):</code>
+        </ul>
+    </div>
+    <div style="flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px;">
+        <h4>Classes: <code>CapWords</code></h4>
+        <ul>
+            <li>Comece <strong>cada palavra</strong> com <strong>letra maiúscula</strong>.</li>
+            <li><strong>Não</strong> use underscores para separar palavras.</li>
+            <li><strong>Exemplos:</strong>
+                <ul>                    
+                    <li><code>class Ponto2D:</code></li>
+                    <li><code>class SmallTown:</code></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+---
+
+### Por que seguir as convenções?
+
+*   **Legibilidade:** Facilita a leitura e compreensão do código por você e por outros.
+*   **Padrão da Comunidade:** A maioria das bibliotecas Python segue essas convenções.
+*   **Manutenção:** Código legível é mais fácil de depurar e modificar.
+
+**Em resumo: use `snake_case` para variáveis e funções, e `CapWords` para classes.**
+
+---
+
 **Exercise 1.3: Derive and compute a formula**
 Can a newborn baby in Norway expect to live for one billion ($10^9$) seconds? Write a Python program for doing  arithmetics to answer the question. Filename: `seconds2years.py`.
 
@@ -117,9 +172,9 @@ $d = v_0t+0.5at^2$, with $v_0 = 3 m/s$, $t = 1s$, $a = 2 m/s^2$.
  a2 = a**2
  b2 = b**2
  eq1_sum = a2 + 2ab + b2
- eq2_sum = a2- 2ab + b2
+ eq2_sum = a2 - 2ab + b2
  eq1_pow = (a + b)**2
- eq2_pow = (a- b)**2
+ eq2_pow = (a - b)**2
  print('Firstequation: %g=%g',%(eq1_sum,eq1_pow))
  print('Secondequation: %h=%h',%(eq2_pow,eq2_pow))
 ```
