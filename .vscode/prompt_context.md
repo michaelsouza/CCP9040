@@ -1,0 +1,4 @@
+- We are creating content (slides and exercises) for the course "CCP9040 - Introdução à Programação Científica" at Universidade Federal do Ceará (UFC).
+- The course is taught by Professor Dr. Michael Souza.
+- The slides are created using Marp, a Markdown presentation tool.
+- The slides contain exercises and examples related to scientific programming with Python. When re-writing the slides, do not solve the exercises, just write them as they are.
