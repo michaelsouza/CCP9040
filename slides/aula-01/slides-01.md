@@ -9,8 +9,6 @@ marp: true
 theme: default
 paginate: true
 _paginate: false
-header: '**CCP9040** - Aula 1'
-footer: 'Aula 01: Introdução à Programação Científica'
 ---
 
 # CCP9040 Introdução à Programação Científica
@@ -91,8 +89,6 @@ footer: 'Aula 01: Introdução à Programação Científica'
 | Script      | Arquivo de texto contendo código-fonte (ex: `script.py`).                                                                                |
 | Variável    | Espaço na memória com um rótulo, usado para armazenar dados.                                                                             |
 | Função      | Bloco de código que executa uma tarefa específica e pode ser reutilizado.                                                                |
-| Classe      | Estrutura que define um tipo de dado, encapsulando dados e comportamentos.                                                               |
-| Módulo      | Arquivo Python que contém definições de funções, classes e variáveis, podendo ser importado em outros scripts. |
 
 ---
 
@@ -180,6 +176,114 @@ Escolher bons nomes é crucial para a **legibilidade** e **manutenção** do có
 
 **Em resumo: use `snake_case` para variáveis e funções, e `CapWords` para classes.**
 
+---
+
+# Tipos de Dados Básicos e Literais
+
+Vamos explorar os blocos de construção fundamentais para armazenar dados em Python: números inteiros, números de ponto flutuante e texto.
+
+---
+
+## Literais: Valores Fixos no Código
+
+*   **O que são?** Representações diretas de valores fixos no código-fonte.
+*   Quando você escreve `10`, `3.14` ou `"Olá"`, você está usando literais.
+*   Python infere o tipo de dado a partir do formato do literal.
+
+---
+
+## Inteiros (`int`)
+
+*   **O que são?** Números inteiros, positivos, negativos ou zero, sem parte decimal.
+*   **Uso:** Contagem, indexação, operações matemáticas exatas.
+
+```python
+# Declaração usando literais inteiros
+ano_nascimento = 1995
+quantidade_itens = 10
+saldo_devedor = -50
+temperatura_zero_absoluto = -273
+
+# Verificando o tipo
+print(type(ano_nascimento))
+print(type(quantidade_itens))
+```
+
+---
+
+## Ponto Flutuante (`float`)
+
+*   **O que são?** Números que possuem uma parte decimal (usam `.`).
+*   **Uso:** Medidas, cálculos científicos, valores monetários (com ressalvas*).
+*   Podem ser representados em notação científica (`e` ou `E`).
+
+```python
+# Declaração usando literais float
+preco_produto = 49.99
+pi_aproximado = 3.14159
+temperatura_media = -5.5
+distancia_anos_luz = 4.246e16 # 4.246 * 10^16
+
+# Verificando o tipo
+print(type(preco_produto))
+print(type(pi_aproximado))
+print(type(distancia_anos_luz))
+```
+
+---
+
+## Strings (`str`)
+
+*   **O que são?** Sequências de caracteres (letras, números, símbolos) usadas para representar texto.
+*   **Delimitadores:** Podem ser declaradas com:
+    *   Aspas simples: `'Olá, mundo!'`
+    *   Aspas duplas: `"Python é legal"`
+    *   Aspas triplas (simples ou duplas): `'''Texto em múltiplas linhas'''` ou `"""Outro texto longo"""`
+*   **Uso:** Nomes, mensagens, arquivos de texto, dados categóricos.
+
+---
+
+## Strings (`str`) - Exemplos
+
+```python
+# Declaração usando literais string
+nome_disciplina = "Introdução à Programação Científica"
+mensagem_curta = 'Use Colab!'
+paragrafo = """
+Este é um exemplo de string
+que ocupa várias linhas no código.
+É útil para documentação ou textos longos.
+"""
+codigo_ufc = 'CCP9040'
+
+# Verificando o tipo
+print(type(nome_disciplina))
+print(type(mensagem_curta))
+print(type(paragrafo))
+print(type(codigo_ufc)) # Mesmo contendo números, é uma string!
+```
+
+---
+
+## Strings (`str`) - F-Strings
+
+*   Uma forma conveniente e legível de formatar strings, incorporando valores de variáveis diretamente.
+*   Prefixe a string com `f` ou `F` e coloque as variáveis entre chaves `{}`.
+
+```python
+nome_aluno = "Maria"
+nota = 9.5
+disciplina = "CCP9040"
+
+# Usando f-string
+mensagem = f"A aluna {nome_aluno} tirou {nota} na disciplina {disciplina}."
+print(mensagem)
+
+# Exemplo com cálculo dentro da f-string
+a = 5
+b = 3
+print(f"A soma de {a} e {b} é {a + b}.")
+```
 ---
 
 **Exercise 1.3: Derive and compute a formula**
@@ -452,3 +556,192 @@ print(f"a_global: {a_global}")
 * **Escopo Local:** Variáveis criadas *dentro* de uma função só existem *dentro* dessa função. Elas são destruídas quando a função termina.
 * **Escopo Global:** Variáveis criadas *fora* de qualquer função são globais e podem ser acessadas (lidas) de qualquer lugar do script, inclusive dentro de funções.
 * Para *modificar* uma variável global dentro de uma função, use a palavra-chave `global`. (Geralmente evitado, prefira passar como parâmetro e retornar).
+
+---
+
+# Controle de Fluxo
+
+Como fazer o programa tomar decisões e repetir tarefas.
+
+---
+
+## Controle de Fluxo: O Que É?
+
+*   É a ordem em que as instruções de um programa são executadas.
+*   Por padrão, a execução é **sequencial** (uma instrução após a outra).
+*   Estruturas de controle de fluxo permitem **alterar** essa ordem:
+    *   **Execução Condicional:** Executar blocos de código apenas se certas condições forem verdadeiras (`if`, `elif`, `else`).
+    *   **Repetição (Loops):** Executar blocos de código múltiplas vezes (`for`, `while`).
+
+---
+
+## Condicional: `if`, `elif`, `else`
+
+*   Permite que o programa escolha qual caminho seguir com base em condições (expressões que resultam em `True` ou `False`).
+
+```python
+# Sintaxe
+if condicao1:
+    # Bloco executado se condicao1 for True
+    print("Condição 1 é verdadeira")
+elif condicao2:
+    # Bloco executado se condicao1 for False e condicao2 for True
+    print("Condição 1 é falsa, mas Condição 2 é verdadeira")
+else:
+    # Bloco executado se todas as condições anteriores forem False
+    print("Nenhuma das condições anteriores é verdadeira")
+```
+*   A indentação (espaços no início da linha) é **crucial** para definir os blocos!
+*   `elif` (else if) e `else` são opcionais.
+
+---
+
+## Condicional: Exemplo
+
+<div style="display: flex; gap: 20px;">
+<div style="flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px;">
+
+```python	
+temperatura = 25
+
+if temperatura > 30:
+    print("Está muito quente!")
+elif temperatura > 20:
+    print("Temperatura agradável.")
+elif temperatura < 10:
+    print("Está frio!")
+else:
+    print("Temperatura amena.")
+```
+</div>
+<div style="flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px;">
+
+```python
+# Exemplo com verificação de número
+numero = -5
+if numero > 0:
+    print(f"{numero} é positivo.")
+elif numero == 0:
+    print(f"{numero} é zero.")
+else:
+    print(f"{numero} é negativo.")
+```
+
+</div>
+
+
+---
+
+## Repetição: Laço `for`
+
+*   Usado para **iterar** sobre os itens de uma sequência (como uma lista, uma string, um range) ou qualquer objeto iterável.
+*   Executa o bloco de código indentado uma vez para cada item na sequência.
+
+```python
+# Sintaxe
+for variavel_item in sequencia:
+    # Bloco de código executado para cada item
+    print(f"Processando item: {variavel_item}")
+
+print("Loop 'for' concluído.")
+```
+
+---
+
+## Laço `for` - Exemplos
+
+```python
+# Iterando sobre uma lista de números
+numeros = [1, 2, 3, 4, 5]
+soma = 0
+for n in numeros:
+    soma = soma + n
+    print(f"Item atual: {n}, Soma parcial: {soma}")
+print(f"Soma total: {soma}")
+
+# Iterando sobre uma string
+palavra = "Python"
+for letra in palavra:
+    print(letra)
+
+# Usando range() para gerar uma sequência de números
+# range(1, 6) -> 1, 2, 3, 4, 5
+# range(0, 10, 2) -> 0, 2, 4, 6, 8
+for i in range(5):
+    print(f"Contagem: {i}")
+```
+
+---
+
+## Repetição: Laço `while`
+
+*   Executa um bloco de código **enquanto** uma condição especificada for `True`.
+*   A condição é verificada *antes* de cada iteração.
+
+```python
+# Sintaxe
+while condicao:
+    # Bloco de código executado enquanto condicao for True
+    print("Dentro do loop while...")
+    # É crucial que algo dentro do loop eventualmente
+    # faça a condição se tornar False, para evitar loop infinito!
+
+print("Loop 'while' concluído.")
+```
+
+---
+
+## Laço `while` - Exemplo
+
+```python
+contador = 0
+limite = 5
+
+print("Iniciando contagem com while:")
+while contador < limite:
+    print(f"Contador atual: {contador}")
+    contador = contador + 1 # IMPORTANTE: Atualizar a variável da condição
+
+print(f"Contagem finalizada. Contador = {contador}")
+
+```
+**Cuidado:** Loops `while` podem facilmente se tornar infinitos se a condição nunca se tornar `False`.
+
+---
+
+## Alterando o Fluxo dos Loops: `break` e `continue`
+
+*   `break`: Interrompe **imediatamente** a execução do loop (`for` ou `while`) mais interno em que se encontra. O programa continua após o bloco do loop.
+*   `continue`: Pula o restante do código *dentro* da iteração atual do loop e passa para a **próxima iteração**.
+
+---
+
+## `break` e `continue` - Exemplos
+
+```python
+print("Exemplo com break:")
+for i in range(10): # 0 a 9
+    if i == 5:
+        print("Encontrei o 5, saindo do loop!")
+        break # Interrompe o loop for
+    print(f"Processando {i}")
+print("Após o loop com break.\n")
+
+print("Exemplo com continue:")
+for i in range(10): # 0 a 9
+    if i % 2 == 0: # Se i for par
+        continue # Pula para a próxima iteração, ignora o print abaixo
+    print(f"Número ímpar encontrado: {i}")
+print("Após o loop com continue.")
+```
+
+---
+
+**Exercise 3.2: Evaluate a sum and write a test function**
+a) Write a Python function `sum_1k(M)` that returns the sum $s = \sum_{k=1}^{M} \frac{1}{k}$.
+b) Compute $s$ for $M = 3$ by hand and write another function `test_sum_1k()` that calls `sum_1k(M)` with $M = 3$ and checks that the result is correct.
+
+---
+
+**Exercise: Find the `n` first prime numbers**
+Write a function `is_prime(n)` that returns `True` if `n` is prime and `False` otherwise. Write another function `first_n_primes(n)` that returns the first `n` prime numbers.
