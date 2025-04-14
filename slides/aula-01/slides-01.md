@@ -286,6 +286,300 @@ print(f"A soma de {a} e {b} é {a + b}.")
 ```
 ---
 
+---
+
+# Coleções: Sequências e Iteráveis
+
+Além dos tipos básicos, Python oferece estruturas para agrupar múltiplos valores. As **sequências** são coleções ordenadas de itens.
+
+*   **Iterável:** Qualquer objeto que pode ser percorrido item a item (ex: em um laço `for`).
+*   Exemplos comuns: Listas, Tuplas, Strings, Range.
+
+---
+
+## Listas (`list`)
+
+*   **O que são?** Coleções **ordenadas** e **mutáveis** (podem ser alteradas após a criação) de itens.
+*   **Sintaxe:** Itens separados por vírgula, entre colchetes `[]`.
+*   Podem conter itens de tipos diferentes.
+
+```python
+# Criando listas
+numeros_primos = [2, 3, 5, 7, 11, 13]
+tarefas_dia = ["Ler email", "Reunião", "Codificar", "Almoçar"]
+lista_mista = [10, "Python", 3.14, True]
+lista_vazia = []
+
+print(numeros_primos)
+print(type(tarefas_dia))
+```
+
+---
+
+## Listas (`list`) - Acesso e Modificação
+
+*   **Acesso por Índice:** Usa colchetes `[]` com o índice (posição) do item. **Índices começam em 0!**
+*   **Fatiamento (Slicing):** `lista[inicio:fim:passo]` para obter sublistas.
+*   **Modificação:** Atribua um novo valor a um índice `lista[indice] = novo_valor`.
+*   **Adicionar:** `.append(item)` adiciona ao final.
+*   **Tamanho:** `len(lista)` retorna o número de itens.
+
+---
+
+```python
+alunos = ["Ana", "Bruno", "Carlos", "Daniela"]
+
+print(f"Primeiro aluno: {alunos[0]}")      # Saída: Ana
+print(f"Último aluno: {alunos[-1]}")       # Saída: Daniela (índice negativo)
+print(f"Do segundo ao terceiro: {alunos[1:3]}") # Saída: ['Bruno', 'Carlos']
+
+alunos[1] = "Beatriz" # Modifica o segundo item
+print(f"Lista modificada: {alunos}")
+
+alunos.append("Eduardo") # Adiciona ao final
+print(f"Lista com adição: {alunos}")
+print(f"Número de alunos: {len(alunos)}")
+```
+
+---
+
+## Tuplas (`tuple`)
+
+*   **O que são?** Coleções **ordenadas** e **imutáveis** (não podem ser alteradas após a criação) de itens.
+*   **Sintaxe:** Itens separados por vírgula, geralmente entre parênteses `()`.
+*   Os parênteses são opcionais em muitos casos, mas recomendados para clareza.
+
+```python
+# Criando tuplas
+coordenadas_ponto = (10.5, -3.2)
+cores_rgb = (255, 0, 128)
+data_importante = (25, 12, 2023)
+tupla_um_item = (99,) # Vírgula é crucial para tupla de um item!
+tupla_vazia = ()
+
+print(coordenadas_ponto)
+print(type(cores_rgb))
+```
+
+---
+
+## Tuplas (`tuple`) - Uso e Imutabilidade
+
+*   **Acesso:** Igual às listas (índices `[]`, fatiamento `[:]`).
+*   **Imutabilidade:** **Não se pode** adicionar, remover ou alterar itens após a criação. Tentar fazer isso gera um erro (`TypeError`).
+*   **Uso:**
+    *   Quando você quer garantir que os dados não mudem (constantes).
+    *   Retornar múltiplos valores de uma função.
+    *   Chaves de dicionários (veremos a seguir).
+
+---
+
+```python
+configs = ("localhost", 8080, True)
+
+print(f"Host: {configs[0]}")
+# configs[1] = 9000 # Isso geraria um TypeError!
+
+# Desempacotamento de tupla
+host, porta, ativo = configs
+print(f"Porta: {porta}, Ativo: {ativo}")
+```
+
+---
+
+## Iteráveis e o Laço `for`
+
+Listas, tuplas e strings são exemplos de **iteráveis**. O laço `for` é a forma mais comum de percorrer os itens de um iterável.
+
+```python
+nomes = ["Alice", "Bob", "Charlie"]
+for nome in nomes:
+    print(f"Olá, {nome}!")
+
+palavra = "UFC"
+for letra in palavra:
+    print(letra.upper())
+
+# range() também cria um iterável
+for i in range(3): # Gera 0, 1, 2
+    print(f"Número: {i}")
+```
+
+---
+
+# Coleções: Dicionários (`dict`)
+
+*   **O que são?** Coleções **não ordenadas** (antes do Python 3.7) ou **ordenadas** (Python 3.7+) de pares **chave-valor**. São **mutáveis**.
+*   **Chave:** Identificador único (e imutável, como string, número, tupla) para acessar um valor.
+*   **Valor:** O dado associado à chave (pode ser de qualquer tipo, inclusive outra lista ou dicionário).
+*   **Sintaxe:** Pares `chave: valor` separados por vírgula, entre chaves `{}`.
+
+---
+
+## Dicionários (`dict`) - Criação e Acesso
+
+```python
+# Criando dicionários
+aluno = {
+    "nome": "Carlos Silva",
+    "matricula": "202300123",
+    "curso": "Ciência da Computação",
+    "notas": [8.5, 9.0, 7.8]
+}
+
+configuracoes = {"host": "api.example.com", "porta": 443, "ativo": True}
+dicionario_vazio = {}
+
+# Acessando valores pela chave
+print(f"Nome do aluno: {aluno['nome']}")
+print(f"Porta da configuração: {configuracoes['porta']}")
+
+# Usando o método .get() (evita erro se a chave não existir)
+email = aluno.get("email", "Email não cadastrado") # Valor padrão opcional
+print(f"Email: {email}")
+```
+
+---
+
+## Dicionários (`dict`) - Modificação e Remoção
+
+*   **Adicionar/Atualizar:** Atribua um valor a uma chave `dicionario[chave] = valor`. Se a chave existe, atualiza; se não, cria.
+*   **Remover:**
+    *   `del dicionario[chave]`: Remove o par chave-valor. Gera erro se a chave não existe.
+    *   `dicionario.pop(chave)`: Remove e *retorna* o valor associado à chave. Gera erro se a chave não existe (a menos que um valor padrão seja fornecido).
+
+---
+
+```python
+contatos = {"Ana": "1234-5678", "Bruno": "9876-5432"}
+
+# Adicionando novo contato
+contatos["Carla"] = "5555-1111"
+print(f"Contatos atualizados: {contatos}")
+
+# Atualizando contato existente
+contatos["Ana"] = "1111-2222"
+print(f"Ana atualizada: {contatos}")
+
+# Removendo Bruno
+telefone_bruno = contatos.pop("Bruno")
+print(f"Removeu Bruno ({telefone_bruno}). Contatos: {contatos}")
+
+# Removendo Carla com del
+del contatos["Carla"]
+print(f"Removeu Carla. Contatos finais: {contatos}")
+```
+
+---
+
+## Dicionários (`dict`) - Iteração e Métodos
+
+É comum iterar sobre as chaves, valores ou ambos.
+
+*   `d.keys()`: Retorna uma visão das chaves.
+*   `d.values()`: Retorna uma visão dos valores.
+*   `d.items()`: Retorna uma visão dos pares (chave, valor).
+
+---
+
+```python
+notas_fiscais = {"NF001": 150.00, "NF002": 89.90, "NF003": 210.50}
+
+print("--- Chaves ---")
+for chave in notas_fiscais.keys():
+    print(chave)
+
+print("\n--- Valores ---")
+for valor in notas_fiscais.values():
+    print(f"R$ {valor:.2f}")
+
+print("\n--- Itens (Chave e Valor) ---")
+for nf, total in notas_fiscais.items():
+    print(f"Nota {nf}: R$ {total:.2f}")
+
+# Iterar diretamente sobre o dicionário itera sobre as chaves
+print("\n--- Iteração Direta (Chaves) ---")
+for k in notas_fiscais:
+    print(k)
+```
+
+---
+
+## O que é uma Função?
+
+<div style="display: flex; gap: 20px;">
+<div style="flex: 1; border: 0px solid #ddd; border-radius: 10px; padding: 15px;font-size: 24px;">
+        
+* Um **bloco de código nomeado** que realiza uma tarefa específica.
+* **Reutilizável:** Pode ser chamado (executado) várias vezes de diferentes partes do programa.
+* **Organização:** Ajuda a dividir o código em partes menores e mais gerenciáveis.
+* **Abstração:** Esconde os detalhes da implementação, focando no *o quê* a função faz, não no *como*.
+        
+</div>
+<div style="flex: 1; border: 0px solid #ddd; border-radius: 10px; padding: 15px;font-size: 24px;">
+
+```python        
+def saudacao(nome):
+    """Esta função imprime uma saudação."""
+    mensagem = f"Olá, {nome}!"
+    print(mensagem)
+```	
+
+```python
+def somar(a, b):
+    """Esta função retorna a 
+    soma de dois números."""
+    resultado = a + b
+    return resultado            
+```
+
+```python
+def soma_e_diferenca(a, b):
+    """Esta função retorna dois 
+    valores: a soma e a diferença."""
+    soma = a + b
+    diferenca = a - b
+    return soma, diferenca
+```
+    
+</div>
+
+---
+
+## Declaração de Função
+
+- Use a palavra-chave `def`, seguida pelo nome da função, parênteses `()` e dois pontos `:`.
+- O corpo da função (código a ser executado) deve ser indentado.
+- Pode receber **parâmetros** (entradas) dentro dos parênteses.
+- Pode **retornar** valores usando a palavra-chave `return`.
+        
+![bg w:600px right:50%](images/funcao_python.png)
+
+---
+
+## Chamando uma Função
+
+* Para executar uma função, use seu nome seguido por parênteses `()`.
+* Se a função espera parâmetros, forneça os **argumentos** dentro dos parênteses.
+* Se a função retorna um valor, você pode armazená-lo em uma variável.
+
+```python
+# Chamando a função saudacao
+saudacao("Aluno")
+saudacao("Professor")
+
+# Chamando a função somar e armazenando o resultado
+resultado_soma = somar(5, 3)
+print(f"O resultado da soma é: {resultado_soma}")
+
+# Chamando e usando o retorno diretamente
+print(f"Outra soma: {soma_e_diferença(10, -2)}")
+```
+
+---
+
+---
+
 **Exercise 1.3: Derive and compute a formula**
 Can a newborn baby in Norway expect to live for one billion ($10^9$) seconds? Write a Python program for doing arithmetics to answer the question. Filename: `seconds2years.py`.
 
@@ -395,79 +689,6 @@ Filename: `f2c.py`.
 
 ---
 
-## O que é uma Função?
-
-<div style="display: flex; gap: 20px;">
-<div style="flex: 1; border: 0px solid #ddd; border-radius: 10px; padding: 15px;font-size: 24px;">
-        
-* Um **bloco de código nomeado** que realiza uma tarefa específica.
-* **Reutilizável:** Pode ser chamado (executado) várias vezes de diferentes partes do programa.
-* **Organização:** Ajuda a dividir o código em partes menores e mais gerenciáveis.
-* **Abstração:** Esconde os detalhes da implementação, focando no *o quê* a função faz, não no *como*.
-        
-</div>
-<div style="flex: 1; border: 0px solid #ddd; border-radius: 10px; padding: 15px;font-size: 24px;">
-
-```python        
-def saudacao(nome):
-    """Esta função imprime uma saudação."""
-    mensagem = f"Olá, {nome}!"
-    print(mensagem)
-```	
-
-```python
-def somar(a, b):
-    """Esta função retorna a 
-    soma de dois números."""
-    resultado = a + b
-    return resultado            
-```
-
-```python
-def soma_e_diferenca(a, b):
-    """Esta função retorna dois 
-    valores: a soma e a diferença."""
-    soma = a + b
-    diferenca = a - b
-    return soma, diferenca
-```
-    
-</div>
-
----
-
-## Declaração de Função
-
-- Use a palavra-chave `def`, seguida pelo nome da função, parênteses `()` e dois pontos `:`.
-- O corpo da função (código a ser executado) deve ser indentado.
-- Pode receber **parâmetros** (entradas) dentro dos parênteses.
-- Pode **retornar** valores usando a palavra-chave `return`.
-        
-![bg w:600px right:50%](images/funcao_python.png)
-
----
-
-## Chamando uma Função
-
-* Para executar uma função, use seu nome seguido por parênteses `()`.
-* Se a função espera parâmetros, forneça os **argumentos** dentro dos parênteses.
-* Se a função retorna um valor, você pode armazená-lo em uma variável.
-
-```python
-# Chamando a função saudacao
-saudacao("Aluno")
-saudacao("Professor")
-
-# Chamando a função somar e armazenando o resultado
-resultado_soma = somar(5, 3)
-print(f"O resultado da soma é: {resultado_soma}")
-
-# Chamando e usando o retorno diretamente
-print(f"Outra soma: {soma_e_diferença(10, -2)}")
-```
-
----
-
 **Exercise 3.3: Write a function for solving quadratic equations**  
 Given a quadratic equation $ax^2 + bx + c = 0$, write a function `roots(a, b, c)` that returns the two roots of the equation.  
 
@@ -504,6 +725,14 @@ Write a function `fibonacci(n)` that returns the Fibonacci number of order `n`. 
 $$F_0 = 0, F_1 = 1, F_n = F_{n-1} + F_{n-2} \text{ for } n \geq 2$$
 The Fibonacci numbers are: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 Filename: `fibonacci.py`.
+
+---
+
+## Escopo de Variáveis
+
+* **Escopo Local:** Variáveis criadas *dentro* de uma função só existem *dentro* dessa função. Elas são destruídas quando a função termina.
+* **Escopo Global:** Variáveis criadas *fora* de qualquer função são globais e podem ser acessadas (lidas) de qualquer lugar do script, inclusive dentro de funções.
+* Para *modificar* uma variável global dentro de uma função, use a palavra-chave `global`. (Geralmente evitado, prefira passar como parâmetro e retornar).
 
 ---
 
@@ -548,14 +777,6 @@ print(f"a_global: {a_global}")
     
 </div>
 </div>
-
----
-
-## Escopo de Variáveis
-
-* **Escopo Local:** Variáveis criadas *dentro* de uma função só existem *dentro* dessa função. Elas são destruídas quando a função termina.
-* **Escopo Global:** Variáveis criadas *fora* de qualquer função são globais e podem ser acessadas (lidas) de qualquer lugar do script, inclusive dentro de funções.
-* Para *modificar* uma variável global dentro de uma função, use a palavra-chave `global`. (Geralmente evitado, prefira passar como parâmetro e retornar).
 
 ---
 
