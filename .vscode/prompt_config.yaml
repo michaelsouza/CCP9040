@@ -1,0 +1,9 @@
+system: |-
+  - Marp (Markdown Presentation)
+files:
+  - ".vscode/prompt_config.yaml" 
+  - "slides/aula-02/slides-02.md"
+prompts:
+  CodeChanges: "Do not copy the entire source code. Just give me the changes and explain where should I put them."
+  CodeFull: "Write a complete updated source code."
+  GitMessage: "Please write a clear, conventional commit message based on the following git_diff, which shows the STAGED changes:"
