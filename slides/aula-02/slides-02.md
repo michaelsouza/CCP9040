@@ -56,7 +56,7 @@ df['Mes_Num'] = range(1, 13) # Para ordenação ou eixos numéricos
 
 # Matplotlib
 
-<!-- Seção dedicada à biblioteca Matplotlib -->
+[https://matplotlib.org/](https://matplotlib.org/)
 
 ---
 
@@ -174,6 +174,7 @@ plt.show()
 ---
 
 # Seaborn
+[https://seaborn.pydata.org/](https://seaborn.pydata.org/)
 
 ---
 
@@ -301,6 +302,7 @@ plt.show()
 ---
 
 # Plotly
+[https://plotly.com/python/](https://plotly.com/python/)
 
 ---
 
