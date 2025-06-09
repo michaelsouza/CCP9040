@@ -10,23 +10,15 @@ _paginate: false
 
 ---
 
-<div style="display: flex; gap: 20px;">
-    <div style="display: flex; gap: 20px; flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px; display: flex; align-items: center;">        
-            <image src="images/logos-libs.png" width="300px" />
-        </div>
-        <div style="flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; justify-content: center;">
-            <h4>Tipos de Gráficos</h4>
-            <ul>
-                <li>Linhas</li>
-                <li>Dispersão</li>
-                <li>Barra</li>
-                <li>Pizza</li>
-                <li>Histograma</li>
-                <li>Boxplot</li>
-            </ul>
-        </div>
-    </div>
-</div>
+## Tipos de Gráficos
+- Linhas
+- Dispersão
+- Barra
+- Pizza
+- Histograma
+- Boxplot
+
+![bg right:60% w:80%](images/charts-gallery.jpg)
 
 ---
 

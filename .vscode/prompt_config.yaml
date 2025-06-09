@@ -3,6 +3,7 @@ system: |-
 files:
   - ".vscode/prompt_config.yaml" 
   - "slides/aula-02/slides-02.md"
+  - "slides/aula-03/slides-03.md"
 prompts:
   CodeChanges: "Do not copy the entire source code. Just give me the changes and explain where should I put them."
   CodeFull: "Write a complete updated source code."
