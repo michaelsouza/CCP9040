@@ -37,10 +37,6 @@ class:
 
 * Visualização, decomposição de séries e análise de autocorrelação.
 
-**Parte 4: Estudos de Caso Práticos**
-
-* Aplicações em finanças, ciência ambiental e e-commerce.
-
 -----
 
 ## **Parte 1**
@@ -442,92 +438,98 @@ Esta simples operação é a base para transformar um problema de série tempora
 
 -----
 
-## **Parte 3: Análise e Visualização para Insights**
+## **Parte 3: Análise e Visualização**
+
+![bg right:40% w:80%](images/charts.png)
 
 -----
 
-### Visualizando Padrões Temporais
+### Pergunta 5: Como podemos *ver* o padrão semanal de vendas?
 
-A visualização eficaz permite ver tendências, sazonalidade e anomalias que não são aparentes em números brutos.
+Já calculamos a média de vendas por dia da semana. Agora, vamos visualizar a distribuição completa com um **Box Plot**. Isso nos mostra a mediana, a variação e os outliers.
 
-  * **Gráficos de Linha**: A visualização fundamental para dados de séries temporais, fornecendo uma visão geral imediata do comportamento dos dados.
-  * **Gráficos Sazonais (Box Plots)**: Para investigar a sazonalidade, use box plots agrupados por um período sazonal (ex: mês ou dia da semana). Isso mostra claramente as mudanças na mediana, variância e outliers entre os períodos.
-  * **Heatmaps**: Poderosos para visualizar a interação entre duas unidades baseadas no tempo (ex: mês vs. ano). Revelam padrões complexos, como se as tendências de vendas de fim de semana diferem no verão versus no inverno.
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
 
------
+# Configurando o estilo do gráfico
+sns.set_style("whitegrid")
+plt.figure(figsize=(10, 6))
 
-### Análise de Decomposição
+# Criando o box plot
+ordem_dias = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+sns.boxplot(data=df_vendas, x='dia_da_semana', y='vendas', order=ordem_dias)
 
-A decomposição fornece uma maneira estruturada de pensar sobre uma série temporal, dividindo-a em seus componentes. O modelo clássico assume que uma série temporal `(Y)` pode ser decomposta em:
+plt.title('Distribuição de Vendas por Dia da Semana na Loja Pynina')
+plt.xlabel('Dia da Semana')
+plt.ylabel('Vendas Diárias')
+plt.show() # Em um script/notebook, isso exibe o gráfico
+```
 
-  * **Tendência (T)**: A direção de longo prazo da série.
-  * **Sazonalidade (S)**: Um padrão periódico e repetitivo.
-  * **Resíduo (R)**: O ruído irregular e aleatório que resta.
+---
 
-Isso pode ser modelado como aditivo (`Y = T + S + R`) ou multiplicativo (`Y = T * S * R`).
+### Pergunta 6: Nossas vendas se comportam da mesma forma todo mês?
 
-A biblioteca `statsmodels` fornece uma implementação direta com `seasonal_decompose`.
+Um **Heatmap** é perfeito para visualizar a intensidade de uma métrica em duas dimensões de tempo (ex: dia da semana vs. mês).
 
------
+```python
+# Criando colunas de Mês e Dia da Semana para o pivot
+df_vendas['mes'] = df_vendas.index.month
+df_vendas['dia_num'] = df_vendas.index.dayofweek
 
-### Correlação no Tempo: ACF e PACF
+# Pivotando a tabela para criar a matriz do heatmap
+heatmap_data = df_vendas.pivot_table(values='vendas', index='dia_num', columns='mes')
 
-Para quantificar as dependências temporais dentro de uma série, usamos gráficos de autocorrelação.
-
-  * **Função de Autocorrelação (ACF)**: Mede a correlação de uma série temporal com uma versão defasada de si mesma. Um pico significativo no lag `k` significa que o valor no tempo `t` está fortemente correlacionado com o valor no tempo `t-k`.
-  * **Função de Autocorrelação Parcial (PACF)**: Mede a correlação entre uma série temporal e seu lag, mas *após* remover os efeitos lineares dos lags intervenientes mais curtos.
-
-Esses gráficos são ferramentas de diagnóstico prescritivas, formando a ponte crítica entre a exploração de uma série temporal e a especificação de um modelo de previsão estatística adequado, como o ARIMA.
-
------
-
-## **Parte 4: Aplicações no Mundo Real (Estudos de Caso)**
-
------
-
-### Estudo de Caso 1: Análise de Mercado Financeiro
-
-  * **Objetivo**: Analisar os movimentos diários de preços de uma ação de tecnologia para identificar tendências de longo prazo usando médias móveis e quantificar a volatilidade de curto prazo.
-  * **Dataset**: Preços diários históricos de uma ação da NASDAQ (ex: do Kaggle).
-  * **Análise**:
-    1.  **Carregar e Preparar Dados**: `read_csv`, `parse_dates`, `set_index`.
-    2.  **Análise de Tendência com Médias Móveis**: Calcular e plotar as médias móveis de 50 e 200 dias do preço de fechamento.
-    3.  **Análise de Volatilidade**: Calcular o desvio padrão dos retornos percentuais diários, reamostrados para uma frequência mensal.
+# Plotando o heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(heatmap_data, cmap='viridis', annot=True, fmt=".0f")
+plt.title('Heatmap de Vendas: Dia da Semana vs. Mês')
+plt.xlabel('Mês')
+plt.ylabel('Dia da Semana (0=Segunda, 6=Domingo)')
+plt.show()
+```
 
 -----
 
-### Estudo de Caso 2: Ciência Ambiental e Mudanças Climáticas
+### Pergunta 7: Qual é a tendência geral das vendas, e existe um ciclo?
 
-  * **Objetivo**: Analisar dados históricos de temperatura diária de uma estação meteorológica para identificar e visualizar a tendência de aquecimento de longo prazo.
-  * **Dataset**: NOAA Global Historical Climatology Network (GHCN-D).
-  * **Análise**:
-    1.  **Carregar e Preparar Dados**: Lidar com unidades (ex: décimos de grau Celsius) e valores ausentes.
-    2.  **Agregar para Análise de Tendência**: Reamostrar os dados diários para médias anuais usando `.resample()`.
-    3.  **Calcular e Visualizar Anomalias de Temperatura**: Plotar o desvio da temperatura de uma linha de base histórica (ex: 1951-1980) para destacar a tendência subjacente.
+A **decomposição de séries temporais** separa nossa série em três componentes:
 
------
+*   **Tendência (T)**: A direção de longo prazo.
+*   **Sazonalidade (S)**: Padrões repetitivos (ex: ciclo semanal).
+*   **Resíduo (R)**: O ruído aleatório que sobra.
 
-### Estudo de Caso 3: Análise de Vendas de E-commerce
+```python
+from statsmodels.tsa.seasonal import seasonal_decompose
 
-  * **Objetivo**: Analisar dados transacionais de e-commerce para descobrir padrões de vendas semanais e mensais, fornecendo insights acionáveis.
-  * **Dataset**: Um dataset transacional como o "Online Retail" do Kaggle.
-  * **Análise**:
-    1.  **Carregar e Preparar Dados**: Limpar dados, calcular o total de vendas por transação e definir o `InvoiceDate` como índice.
-    2.  **Agregar para Vendas Diárias**: Reamostrar os dados transacionais para uma frequência diária regular.
-    3.  **Visualizar Padrões Semanais e Mensais**: Usar box plots para comparar as distribuições de vendas entre diferentes dias da semana ou meses.
-    4.  **Criar um Heatmap de Vendas**: Visualizar a intensidade das vendas em duas dimensões de tempo, como mês e ano.
+# Decompondo a série de vendas (período de 7 dias para sazonalidade semanal)
+decomposicao = seasonal_decompose(df_vendas['vendas'], model='additive', period=7)
 
------
-
-### Conclusão
-
-  * **Pandas é Indispensável**: Oferece um framework robusto e de alta performance para análise de séries temporais.
-  * **Estruturas de Dados são a Chave**: O `DatetimeIndex` transforma um DataFrame padrão em um potente motor analítico.
-  * **Entendimento Conceitual é Crucial**: Dominar a distinção entre `Timestamp` e `Period`, o fluxo de trabalho de fuso horário (`localize` -\> `convert`), e a natureza interpretativa do `resample` é fundamental.
-  * **Fluxo de Trabalho Sistemático**: A análise de séries temporais permite passar sistematicamente da ingestão de dados brutos à descoberta de padrões profundos e à engenharia de features para modelagem preditiva.
-  * **Versatilidade**: As mesmas funcionalidades do Pandas podem ser aplicadas a diversos domínios para extrair insights acionáveis e baseados em dados.
+# Plotando os componentes
+fig = decomposicao.plot()
+fig.set_size_inches(12, 8)
+plt.show()
+```
 
 -----
+
+### Pergunta 8: A venda de hoje está relacionada com a de ontem?
+### E com a da semana passada?
+
+Para responder isso, usamos a **Análise de Autocorrelação (ACF)**. Ela mede o quão correlacionada uma observação está com suas versões passadas (lags).
+
+*   **ACF (Função de Autocorrelação):** Mostra a correlação com os lags.
+
+```python
+from statsmodels.graphics.tsaplots import plot_acf
+
+# Plotando o gráfico ACF para os últimos 30 dias (lags)
+fig, ax = plt.subplots(figsize=(10, 5))
+plot_acf(df_vendas['vendas'], lags=30, ax=ax)
+plt.show()
+```
+
+---
 
 <!-- _backgroundColor: yellow -->
 # Perguntas?
